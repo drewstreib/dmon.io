@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  dmon_rmq:
+    image: rabbitmq:3.12
+    container_name: dmon_rmq
+    restart: always
+    volumes:
+      - /mnt/eba1/dmon_rmq:/var/lib/rabbitmq
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+  dmon_looper:
+    build: ./build/looper
+    container_name: dmon_looper
+    restart: always
+    volumes:
+      - ./looper:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+          #  dmon_www:
+          #    build: ./build/www
+          #    container_name: dmon_www
+          #    restart: always
+          #    volumes:
+          #      - ./www:/app
+          #    extra_hosts:
+          #      - "host.docker.internal:host-gateway"
+          #    logging:
+          #      driver: json-file
+          #      options:
+          #        max-size: "10m"
+          #        max-file: "3"
