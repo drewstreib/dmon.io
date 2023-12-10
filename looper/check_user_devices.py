@@ -110,7 +110,7 @@ def CheckDevice(device, user):
                     lastNotifyTime = device["notify"]["lastNotified"]
                     msNotifyAgo = now - lastNotifyTime
                     if msNotifyAgo > 3600000:  # only notify if > 1 hour
-                        logging.warn("NOTIFYING {}!".format(user.get("email","NONE")))
+                        logging.warn("NOTIFYING {}!".format(user.get("email", "NONE")))
                         email_notify.SendEmail(
                             recipient=user.get("email", "dtype@dtype.org"),
                             device=device,
@@ -119,7 +119,9 @@ def CheckDevice(device, user):
                     else:
                         logging.warn("Not notifying. Still within re-notify limit.")
                 else:
-                    logging.warn("Not notifying. User or device has disabled notification.")
+                    logging.warn(
+                        "Not notifying. User or device has disabled notification."
+                    )
                 return 1  # changed
     else:  # unknown or not yet consistent state
         logging.info("{} Device status unknown".format(logtext))

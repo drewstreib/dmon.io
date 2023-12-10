@@ -10,6 +10,7 @@ dynamo = boto3.resource("dynamodb")
 deviceTable = dynamo.Table("deviceping")
 userTable = dynamo.Table("deviceping-users")
 
+
 def respond(err, res=None):
     return {
         "statusCode": "400" if err else "200",
@@ -65,10 +66,7 @@ def lambda_handler(event, context):
         timer["lastPings"] = []
     # check ping interval for MININTERVAL abuse
     if len(timer["lastPings"]) > 0:
-        if (
-            timems - max(timer["lastPings"])
-            < MININTERVAL
-        ):  # too fast
+        if timems - max(timer["lastPings"]) < MININTERVAL:  # too fast
             return respond(
                 """{ "error": "Device check-in faster than allowed interval." } """
             )

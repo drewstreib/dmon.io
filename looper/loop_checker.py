@@ -1,10 +1,12 @@
 import boto3, decimal, json
 import logging
-#import schedule, time
+
+# import schedule, time
 import time
 import check_user_devices
 
 logging.basicConfig(level=logging.INFO)
+
 
 def check_all():
     start = time.time()
@@ -28,9 +30,9 @@ def check_all():
 
 def main():
     logging.info("Starting main()")
-    #schedule.every(60).seconds.do(check_all)
+    # schedule.every(60).seconds.do(check_all)
     while True:
-        #schedule.run_pending()
+        # schedule.run_pending()
         check_all()
         time.sleep(55)
 
